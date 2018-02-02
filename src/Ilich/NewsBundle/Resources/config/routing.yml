@@ -1,0 +1,17 @@
+ilich_news_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: IlichNewsBundle:Default:index }
+
+
+IlichNewsBundle_category:
+    resource: "@IlichNewsBundle/Resources/config/routing/category.yml"
+    prefix:   /category
+    
+IlichNewsBundle_tag:
+    resource: "@IlichNewsBundle/Resources/config/routing/tag.yml"
+    prefix:   /tag
+    
+IlichNewsBundle_post:
+    resource: "@IlichNewsBundle/Resources/config/routing/post.yml"
+    prefix:   /
+    

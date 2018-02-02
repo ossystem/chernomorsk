@@ -1,0 +1,93 @@
+{% extends '::base.html.twig' %}
+{% trans_default_domain 'IlichNewsBundle' %}
+
+{% block jquery %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset("/bundles/sonataadmin/vendor/select2/select2.min.js") }}"></script>
+{% endblock %}
+
+{% block title %}
+    {{ 'ilich_news.post.add'|trans}} - {{'logo.title'|trans({}, 'messages')}}
+{% endblock %}
+{% block content -%}
+    <link rel="stylesheet" type="text/css"  href="{{ asset('/bundles/sonataadmin/vendor/select2/select2.css') }}"  /> 
+    
+    <script src="/bundles/sonataadmin/vendor/select2/select2.min.js?v=v1" type="text/javascript"></script>
+    
+     <section class="post_block no-main-image">
+        <div class="post-show ">
+            <h1>{{'ilich_news.post.adding'|trans({}, 'IlichNewsBundle')}}</h1>
+        </div>
+        
+        <div class="section-part">
+        {% if error is not null %}
+            <div class="massage">{{error|trans}}</div>
+        {% endif %}
+    <form action="{{ path('news_add') }}" method="POST" role="form" {{ form_enctype(form) }}  class="add-item" id="add-news-form"> 
+        <div>
+            {{ form_label(form.title) }}
+            {{ form_errors(form.title) }}
+            {{ form_widget(form.title) }}
+        </div>   
+        <div>
+            {{ form_label(form.categories) }}
+            {{ form_errors(form.categories) }}
+            {{ form_widget(form.categories) }}
+        </div>
+        <div>
+            {{ form_label(form.content) }}
+            {{ form_errors(form.content) }}
+            {{ form_widget(form.content) }}
+        </div>
+        
+        <div>
+            {{ form_label(form.tags) }}
+            {{ form_errors(form.tags) }}
+            {{ form_widget(form.tags) }}
+        </div>
+        
+        {#<div>
+            {{ form_label(form.youtubeVideos) }}
+
+        <input type="text" id="ilich_newsbundle_post_youtubeVideos___name___binaryContent" name="ilich_newsbundle_post[youtubeVideos][__name__][binaryContent]" />
+    </div>#}
+            <div class="margin-bottom-25 margin-top-10">
+                
+                <span class="margin-left-10">{{ form_label(form.additionalImages) }}</span>
+                {{ form_widget(form.additionalImages) }} 
+                
+            </div>
+                
+        
+                
+        <div>
+            {{ form_widget(form.user, {'value': userLogin})}}
+        </div>
+        <div>
+            {{ form_widget(form.author, {'value': userName})}}
+        </div>
+        <div class="text-right margin-bottom-25 padding-bottom-30" style="margin-right: 17px;">
+            <button type="submit" class="button-blue">{{ 'ilich_news.post.send_post'|trans}}</button>
+        </div>
+    </form>
+        </div>
+     </section>
+    
+<script>            
+    
+    $(document).ready(function(){
+        $('#ilich_newsbundle_post_tags').select2({
+            width: '59%',
+            minimumResultsForSearch: 10,
+            allowClear: true
+        });
+    });
+    
+</script>                        
+            
+{% block main_sidebar %}
+<div class="side_bar">
+{% include 'IlichSiteBundle:Default:rightMenuBlock.html.twig' %}
+</div>
+{% endblock %}
+{% endblock %}

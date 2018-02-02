@@ -1,0 +1,7 @@
+{% block content_inner %}
+    <h1>Last News</h1>
+    <a href="{{ url('news_add') }}">Add News</a>
+    
+    {% include 'IlichNewsBundle:Post:list.html.twig' with { posts: pagination }%}
+	
+{% endblock %}

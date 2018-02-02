@@ -1,0 +1,6 @@
+{% extends 'SonataAdminBundle:CRUD:list.html.twig' %}
+
+{% block actions %}
+    <li><a class="sonata-action-element" href="{{ path('admin_ilich_news_post_create') }}"><i class="fa fa-plus-circle"></i> {{ 'ilich_news.post.add'|trans({}, 'IlichNewsBundle')}}</a></li>
+    <li><a class="sonata-action-element" href="{{ path('admin_ilich_news_post_clear') }}"><i class="fa fa-eraser"></i> {{ 'ilich_news.post.clear'|trans({}, 'IlichNewsBundle')}}</a></li>
+{% endblock %}

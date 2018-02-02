@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+{% block title %}
+    {{ 'ilich_news'|trans({}, 'IlichNewsBundle')}} - {{'logo.title'|trans}}
+{% endblock %}
+{% block content -%}
+    <h1>{{ category.title }}</h1>
+    <p>{{ category.description }}</p>
+    <br /> 
+    {% include 'IlichNewsBundle:Post:list.html.twig' with { posts: posts } %}
+	<div class="navigation">
+		{{ knp_pagination_render(posts) }}
+	</div>
+{% endblock %}

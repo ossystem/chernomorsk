@@ -1,0 +1,7 @@
+category:
+    pattern:  /
+    defaults: { _controller: "IlichNewsBundle:Category:index" }
+
+category_show:
+    pattern:  /{slug}/{page}
+    defaults: { _controller: "IlichNewsBundle:Category:show", page: 1 }

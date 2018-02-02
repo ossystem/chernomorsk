@@ -1,0 +1,23 @@
+news_home:
+    pattern:  /
+    defaults: { _controller: "IlichNewsBundle:Post:index", page: 1 }
+
+news_page:
+    pattern:  /page/{page}
+    defaults: { _controller: "IlichNewsBundle:Post:index", page: 1 }
+
+news_add:
+    pattern:  /add
+    defaults: { _controller: "IlichNewsBundle:Post:add"  }
+   
+thank:
+    pattern:  /thank
+    defaults: { _controller: "IlichNewsBundle:Post:thank"  }
+   
+post_show:
+    pattern:  /{slug}
+    defaults: { _controller: "IlichNewsBundle:Post:show" }
+
+complaint_comment:
+    pattern: /complaint/{id}
+    defaults: { _controller: IlichNewsBundle:Post:complaintComment }

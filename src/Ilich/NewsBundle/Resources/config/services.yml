@@ -1,0 +1,38 @@
+parameters:
+#    ilich_news.example.class: Ilich\NewsBundle\Example
+    ilich_news.translation_domain: IlichNewsBundle
+    ilich_site.translation_domain: IlichSiteBundle
+
+services:
+#    ilich_news.example:
+#        class: %ilich_news.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    ilich_news.admin.category:
+        class: Ilich\NewsBundle\Admin\CategoryAdmin
+        arguments: [~, Ilich\NewsBundle\Entity\Category, IlichNewsBundle:CategoryAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: ilich_news, label_catalogue: %ilich_news.translation_domain%, label: ilich_news.categories}
+        calls:
+            - [ setTranslationDomain, [ %ilich_news.translation_domain% ] ]
+
+    ilich_news.admin.post:
+        class: Ilich\NewsBundle\Admin\PostAdmin
+        arguments: [~, Ilich\NewsBundle\Entity\Post, IlichNewsBundle:PostAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: ilich_news, label_catalogue: %ilich_news.translation_domain%, label: ilich_news.posts}
+        calls:
+            - [ setTranslationDomain, [ %ilich_news.translation_domain% ] ]
+            
+    ilich_news.form.type.category_selector:
+        class: Ilich\NewsBundle\Form\Type\CategorySelectorType
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+          - {name: form.type, alias: category_selector}
+          
+    ilich_news.admin.comments:
+        class: Ilich\SiteBundle\Admin\CommentsAdmin
+        arguments: [~, Ilich\SiteBundle\Entity\Comment, IlichSiteBundle:CommentsAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: ilich_comments, label_catalogue: %ilich_site.translation_domain%, label: ilich_comments}
+        calls:
+            - [ setTranslationDomain, [ %ilich_site.translation_domain% ] ]

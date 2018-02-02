@@ -1,0 +1,152 @@
+{% extends '::base.html.twig' %}
+{%block metadata %}
+<meta name="description" content="{{entity.title}}">
+<meta property="og:title" content="{{entity.title}}">
+<meta property="og:url" content="{{app.request.uri}}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Ilich">
+{% if image_meta %}
+    <meta property="og:image" content="{{asset(image_meta)}}">
+{% endif %}
+{% endblock %}
+
+{% block title %}
+    {{ entity.title}} - {{'logo.title'|trans}}
+{% endblock %}
+{% block javascripts_t %}
+    {{ parent() }}
+    {% if not app.user or not app.user.canCopyNews %}
+        <script type="text/javascript" language="javascript">
+            $(document).ready(function() {
+                $(this).bind("contextmenu", function(e) {
+                    e.preventDefault();
+                });
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+{% block content -%}
+    <section class="post_block">
+        <div class="post-show">
+            <h1>{{ entity.title }}</h1>
+                <p id="post-comments-320" class="post_info font-10">
+                    {% set date = entity.createdAt|formatTime %}
+                    <span class="left">{{ date['time'] }}, {{ date['date']|trans}}</span> 
+                    <span class="icon-views"></span>{{ entity.views }} 
+                    <span class="icon-comments"></span>{{ getCommentsCount('news_' ~ entity.id)}}
+                </p>
+                <p class="category-link text-uppercase">
+                    <a href="{{ path('news_home') }}">{{ 'ilich_news'|trans({}, 'IlichNewsBundle') }}</a>
+                    <img src="{{asset("/resources/img/arrow-right.png")}}" alt="arrow" />
+                    {% if entity.categories[0] is defined %}
+                    <a href="{{ url('category_show', {slug: entity.categories[0].slug}) }}">{{ entity.categories[0].title}}</a>
+                    {% endif %}
+                    {% set date = entity.createdAt|formatTime %}
+                    <span class="post_info right">{{ date['time'] }}, {{ date['date']|trans}}</span>
+                </p>
+                
+        </div>
+        <div class="post-show">
+            <div class="img_container">
+                {% if entity.additionalImages[0] is defined %}
+                    {% thumbnail entity.additionalImages[0], 'big' with{'alt' :entity.title, 'title': entity.title} %}
+                {% endif %}
+            </div>
+            <div class="{% if not app.user or not app.user.canCopyNews %}unselectable{% endif %}"> {{ entity.content|raw }}</div>
+            <div class="clearfix">
+                {% set size = entity.additionalImages|length - 1 %}
+                {% if size > 0 %}
+                {% for i in 1..size %}
+                {% thumbnail entity.additionalImages[i], 'big' with{'alt' :entity.title, 'title': entity.title} %}
+                {% endfor %}
+                {% endif %}
+                {% if entity.youtubeVideos is not null %}
+                {% for youtube in entity.youtubeVideos %}
+                <iframe src="http://www.youtube.com/embed/{{ youtube.providerReference}}" width="250px" allowfullscreen="" frameborder="0"></iframe>
+
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div>
+                <span class="font-bold" >{{ 'ilich_news.post.share'|trans({}, 'IlichNewsBundle') }}:</span> 
+                <span class="social_icons">
+                <a href="http://www.facebook.com/sharer.php?u={{ url('post_show', {'slug':entity.slug} )}}&amp;t={{entity.title}}">
+                    <img class="facebook" src="{{asset("/resources/img/tr.gif")}}" alt="Facebook" /></a>
+                <a href="http://twitter.com/intent/tweet?status={{ entity.title|truncate(137)}}">
+                    <img class="twitter" src="{{asset("/resources/img/tr.gif")}}" alt="Twitter" /></a>
+                <a href="http://vk.com/share.php?url={{ url('post_show', {'slug':entity.slug} )}}">
+                    <img class="vkontakte" src="{{asset("/resources/img/tr.gif")}}" alt="{{'vkontakte'|trans()}}" /></a> 
+                <a href="http://www.odnoklassniki.ru/dk?st.cmd=addShare&amp;st.s=1&amp;st._surl={{ url('post_show', {'slug':entity.slug} )}}&amp;st.comments={{ entity.title|truncate(100)}}">
+                    <img class="odnoklassniki" src="{{asset("/resources/img/tr.gif")}}" alt="{{'odnoklassniki'|trans()}}" /></a>
+                </span>
+            </div>
+                    
+                    
+            {# -- Photoreport start -- #}        
+            {% if entity.gallery %}
+            <div class="photoreport-title news-photoreport-title">
+                <h3 class="font-24 font-bold left padding-top-30"> {{ entity.gallery.name }} {# {{ sonata_block_render_event('breadcrumb', { 'context': 'gallery_view', 'gallery': gallery, 'current_uri': app.request.requestUri }) }} #}</h3>
+
+                <div class="clear"></div>
+            </div>
+
+            <div class="photoreports-photos news-photoreport clearfix">
+
+
+            <div class="sonata-media-gallery-media-list">
+                {% for galleryHasMedia in entity.gallery.GalleryHasMedias %}
+                    {% if galleryHasMedia.media %}
+                    <div class="media sonata-media-gallery-media-item">
+                        {#{ url('sonata_media_view', {'id': galleryHasMedia.media|sonata_urlsafeid }) }#}
+
+                        <a class="fancy pull-left sonata-media-gallery-media-item-link" href="{% path galleryHasMedia.media , 'big' %}" rel="gallery">
+                            {% thumbnail galleryHasMedia.media, 'preview' with {'class': 'media-object'} %}
+                        </a>
+                        <div class="media-body">
+                            {# <h4 class="media-heading">{{ galleryHasMedia.media.name }}</h4> #} 
+                            {# <p>{{ galleryHasMedia.media.description|raw }}</p> #}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            </div>
+            {% endif %}
+            {# -- Photoreport end -- #}
+                    
+            <div class="news-tags">   
+                {% if entity.tags.values|length %}
+                    <span class="font-bold" >{{ 'ilich_news.post.tags'|trans({}, 'IlichNewsBundle') }}:</span> 
+                {% endif %}
+
+                {% for tag in entity.tags.values %}{%if not loop.first%},{%endif%} <a href="{{ url('tag_show', {'id':tag.id} )}}">{{ tag.name }}</a>{% endfor %}
+            </div>
+                
+            {% if app.user is not null %} 
+            <br />
+            <div class="text-left">
+                <a class="button-blue" href="{{path('news_add')}}">{{ 'ilich_news.post.add'|trans({}, 'IlichNewsBundle')}}</a>
+            </div>
+            {% endif %}
+            
+        </div>
+            
+        {% if similar_news %}
+        <div class="similar-news-block">
+             <span class="font-bold" >{{ 'ilich_news.post.similar_news'|trans({}, 'IlichNewsBundle') }}:</span>
+             <div class="clearfix news_list">
+             {% include 'IlichNewsBundle:Post:list.html.twig' with {'posts': similar_news} %}
+             </div>
+        </div>
+        {% endif %}
+        
+        <section class="comment-block">
+            {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'news_' ~ entity.id} %}
+        </section>
+    </section>
+    {% block main_sidebar %}
+        {% render(controller('IlichSiteBundle:Default:sidebar', {'show_poster' : 1, 'show_weather' : 1, 'show_poll' : 0})) %}
+    {% endblock %}                        
+{% endblock %}

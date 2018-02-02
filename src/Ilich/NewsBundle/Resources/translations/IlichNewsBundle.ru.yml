@@ -1,0 +1,41 @@
+# ru_RU
+
+ilich_news: Новости
+ilich_news.actions: Действия
+ilich_news.page_title: Новости Черноморска – самые свежие и важные новости
+
+ilich_news.categories: Раздел
+ilich_news.all_categories: Категории
+ilich_news.category.slug: Урл категории
+ilich_news.category.title: Название
+ilich_news.category.description: Описание
+ilich_news.category.parent: Родительская категория
+
+ilich_news.posts: Новости
+ilich_news.post.slug: Урл новости
+ilich_news.post.title: Заголовок новости
+ilich_news.post.anounce: Анонс (постится в твиттер макс. кол-во символов 140)
+ilich_news.post.content: Текст новости
+ilich_news.post.tags: Теги
+ilich_news.post.no_tags: Нет тегов
+ilich_news.post.similar_news: Похожие новости
+ilich_news.post.specnews: Спецновость
+ilich_news.post.enabled: Статус активации
+ilich_news.post.postedAt: Дата публикации
+ilich_news.post.author: Автор
+ilich_news.post.user: Пользователь
+ilich_news.post.vkontakte: Запостить новость VKontakt
+ilich_news.post.facebook: Запостить новость в Facebook
+ilich_news.post.twitter: Запостить новость в Twitter
+ilich_news.post.add: Добавить новость
+ilich_news.post.clear: Очистить кэш
+ilich_news.post.adding: Добавление новости
+ilich_news.post.added: Новость добавлена
+ilich_news.post.thank: спасибо за вашу новость! Возможно, она будет опубликована после прохождения модерации. Пользователь, у которого будет больше всего опубликованных новостей получит приз.
+ilich_news.post.add_more: Добавить еще новость
+ilich_news.post.share: ПОДЕЛИТЬСЯ
+ilich_news.post.more_news: Больше новостей
+ilich_news.post.image: Фотография
+ilich_news.post.send_post: Отправить на модерацию
+ilich_news.post.photoreport: Галерея фототчета
+ilich_news.post.noimage: Необходимо загрузить фото

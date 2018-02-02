@@ -1,0 +1,32 @@
+{% set i = 0 %} 
+
+{% for post in posts %}
+    {% set hide_class = '' %}
+    {% if i > 11%}
+    {% set hide_class = 'new-1004-hide' %}
+    {% elseif i > 4%}
+    {% set hide_class = 'new-320-hide'%} 
+    {% endif %}
+   <article class="smaller_news {{hide_class}}">
+        <a href="{{ path('post_show', { 'slug': post.slug }) }}">
+            <div class="img_container">
+                {% if post.additionalImages|length >0 %}
+                    {#{% thumbnail post.additionalImages[0], 'small' with{'alt':post.title, 'title': post.title} %}#}
+                    {{ picture(post.additionalImages[0], ['small'], {'max-width: 800px':'big'}) }}
+                {% endif %}
+            </div>
+        </a>                   
+        <p class="post_info font-10">
+            {% set date = post.createdAt|formatTime %}
+            <span class="left">{{ date['time'] }}, {{ date['date']|trans}}</span> 
+            <span class="icon-views"></span>{{ post.views }} 
+            <span class="icon-comments"></span>{% if app.user %}{{ getCommentsCount('news_' ~ post.id) }}{% else %}0{% endif %}
+        </p>
+        <a href="{{ path('post_show', { 'slug': post.slug }) }}">
+
+            <h2 class="font-14">{{ post.title }}</h2>
+        </a> <hr >    
+    </article>
+
+    {% set i = i + 1 %} 
+{% endfor %}

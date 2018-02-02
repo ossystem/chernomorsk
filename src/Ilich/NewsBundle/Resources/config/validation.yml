@@ -1,0 +1,7 @@
+Ilich\NewsBundle\Entity\Post:
+    properties:
+        content:
+           - NotBlank: {message: "please add content"}
+    
+    constraints:
+        - Callback: [validate]

@@ -1,0 +1,58 @@
+{% extends '::base.html.twig' %}
+{%block metadata %}
+<meta name="description" content="{{'keywords.description.news'|trans}}">
+{% endblock %}
+
+{% block title %}
+    {% if cur_category in 'ilich_news' %}
+    {{ 'ilich_news.page_title'|trans({}, 'IlichNewsBundle') }}
+    {% else %}
+        {{ cur_category }}
+        {% endif %}
+        - {{'logo.title'|trans}}
+{% endblock %}
+
+{% block content %}
+    <section class="post_block">
+        <div class="news-menu post-show clearfix">
+        <h3 class="font-24 font-bold left padding-10 text-uppercase">{{ cur_category|trans({}, 'IlichNewsBundle') }}</h3>
+        <hr class="hide-580" />
+        <div class="all-post-category"><a href="#">{{ 'ilich_news.all_categories'|trans({}, 'IlichNewsBundle') }}</a></div>
+        <div class=" right">
+            <a href="{{ path('news_home')}}" class="post-category
+               {% if cur_category in 'ilich_news' %} current-cat {% endif %}">{{ 'all'|trans}}</a>
+            {% for category in categories %}
+                <a href="{{ path('category_show', {'slug': category.slug, 'page' : 1}) }}" class="post-category
+                   {% if category.title in cur_category  %} current-cat {% endif %}" >{{category.title}}</a>
+            {% endfor %}
+            
+        </div>
+    </div>
+            
+    <div  class="clearfix news_list">
+     {% include 'IlichNewsBundle:Post:list.html.twig' with { posts: posts }%}
+     <div id="more_news" class="left"><a href="#"> {{ 'ilich_news.post.more_news'|trans({}, 'IlichNewsBundle') }}</a>
+    </div>
+     </div><br/>
+     <div class="hide-1000" id="paga">
+
+        {{ knp_pagination_render(posts) }}
+    </div> 
+            
+    </section>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", ready);
+        function ready() {
+            $('.post-show').find('.all-post-category').click(function(e) {
+                $('.post-show .right').slideToggle(500);
+                return false;
+            });
+        }
+    </script>
+{% block main_sidebar %}
+    {{ render(controller('IlichSiteBundle:Default:sidebar', { 'show_poster': 1, 'show_weather': 1, 'show_poll' : 0 })) }}
+{% endblock %}	
+	
+{% endblock %}
+
+

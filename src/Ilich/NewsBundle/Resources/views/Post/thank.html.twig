@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+{% block title %}
+    {{ 'ilich_news.post.adding'|trans({},'IlichNewsBundle')}} - {{'logo.title'|trans}}
+{% endblock %}
+{% block content -%}
+    <div class="news_list">
+        <h1>{{'ilich_news.post.added'|trans({}, 'IlichNewsBundle')}}</h1>
+
+        {{ userName }}, {{'ilich_news.post.thank'|trans({}, 'IlichNewsBundle')}}   
+        <br/>
+        <a href="{{ path('news_add') }}">{{'ilich_news.post.add_more'|trans({}, 'IlichNewsBundle')}}.</a>
+    </div>
+{% endblock %}

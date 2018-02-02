@@ -1,0 +1,24 @@
+# en_US
+
+ilich_news: News
+ilich_news.actions: Actions
+
+ilich_news.categories: Categories
+ilich_news.category.slug: Slug
+ilich_news.category.title: Title
+ilich_news.category.description: Description
+ilich_news.category.parent: Parent Category
+
+ilich_news.posts: News
+ilich_news.post.slug: Slug
+ilich_news.post.title: Title
+ilich_news.post.anounce: Anounce
+ilich_news.post.content: Content
+ilich_news.post.tags: Tags
+ilich_news.post.no_tags: No tags
+ilich_news.post.similar_news: Similar news
+ilich_news.post.author: Author
+ilich_news.post.user: User
+ilich_news.post.vkontakte: Post to the VKontakt
+ilich_news.post.facebook: Post to the Facebook
+ilich_news.post.twitter: Post to the Twitter

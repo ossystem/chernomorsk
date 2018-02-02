@@ -1,0 +1,3 @@
+tag_show:
+    pattern:  /{id}/{page}
+    defaults: { _controller: "IlichNewsBundle:Tag:show", page: 1 }
